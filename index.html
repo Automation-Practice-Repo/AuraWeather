@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraWeather - Premium Experience</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="dark-theme">
+  <!-- Dynamic Atmospheric Background (changes based on current state/weather) -->
+  <div id="ambient-background" class="ambient-bg auth-mode">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div id="weather-particles" class="weather-particles"></div>
+  </div>
+
+  <!-- Main Container -->
+  <main id="app-container" class="app-container auth-view">
+    
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- ==================== AUTHENTICATION SCREEN ==================== -->
+    <section id="auth-screen" class="screen active">
+      <div class="brand-header">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="animated-logo-svg">
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+            <path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z" class="sun-core"></path>
+          </svg>
+        </div>
+        <h1 class="brand-title">AURA<span>WEATHER</span></h1>
+        <p class="brand-tagline">Step into your personalized climate dashboard</p>
+      </div>
+
+      <!-- 3D Flippable Card Container -->
+      <div class="auth-card-wrapper">
+        <div id="auth-card" class="auth-card">
+          
+          <!-- FRONT: LOGIN FORM -->
+          <div class="card-face login-face">
+            <h2 class="form-title">Welcome Back</h2>
+            <p class="form-subtitle">Enter your credentials to access the atmosphere</p>
+            
+            <form id="login-form" class="auth-form" novalidate>
+              <div class="input-group">
+                <label for="login-username">Username</label>
+                <div class="input-wrapper">
+                  <span class="input-icon">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  </span>
+                  <input type="text" id="login-username" placeholder="Enter username" required autocomplete="username">
+                </div>
+              </div>
+              
+              <div class="input-group">
+                <label for="login-password">Password</label>
+                <div class="input-wrapper">
+                  <span class="input-icon">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                  </span>
+                  <input type="password" id="login-password" placeholder="Enter password" required autocomplete="current-password">
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary submit-btn">
+                <span>Sign In</span>
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </button>
+            </form>
+
+            <div class="form-footer">
+              <span>New to AuraWeather?</span>
+              <button id="go-to-signup" class="btn btn-link">Create Account</button>
+            </div>
+          </div>
+
+          <!-- BACK: REGISTER FORM -->
+          <div class="card-face signup-face">
+            <h2 class="form-title">Create Account</h2>
+            <p class="form-subtitle">Register to discover localized temperature insights</p>
+            
+            <form id="signup-form" class="auth-form" novalidate>
+              <div class="input-group">
+                <label for="signup-username">Username</label>
+                <div class="input-wrapper">
+                  <span class="input-icon">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  </span>
+                  <input type="text" id="signup-username" placeholder="Choose a username" required autocomplete="username">
+                </div>
+              </div>
+              
+              <div class="input-group">
+                <label for="signup-password">Password</label>
+                <div class="input-wrapper">
+                  <span class="input-icon">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                  </span>
+                  <input type="password" id="signup-password" placeholder="Create strong password" required autocomplete="new-password">
+                </div>
+              </div>
+
+              <div class="input-group">
+                <label for="signup-confirm-password">Confirm Password</label>
+                <div class="input-wrapper">
+                  <span class="input-icon">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect></svg>
+                  </span>
+                  <input type="password" id="signup-confirm-password" placeholder="Repeat your password" required autocomplete="new-password">
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary submit-btn">
+                <span>Sign Up</span>
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </button>
+            </form>
+
+            <div class="form-footer">
+              <span>Already a member?</span>
+              <button id="go-to-login" class="btn btn-link">Sign In Instead</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== HOME SCREEN ==================== -->
+    <section id="home-screen" class="screen">
+      
+      <!-- HEADER / NAVIGATION BAR -->
+      <header class="home-header">
+        <div class="logo">
+          <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+            <path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"></path>
+          </svg>
+          <span class="title">AuraWeather</span>
+        </div>
+        <div class="user-control-panel">
+          <span id="user-greeting" class="user-greeting">Welcome, User</span>
+          <button id="logout-btn" class="btn btn-secondary btn-icon-only" title="Logout">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- DASHBOARD WRAPPER -->
+      <div class="dashboard-layout">
+        
+        <!-- MAIN WEATHER CARD (Initially Empty / Informational until Unlocked and Location provided) -->
+        <div class="weather-panel-card">
+          <div id="weather-card-placeholder" class="weather-placeholder-content">
+            <div class="lock-graphic">
+              <!-- Animated lock showing status -->
+              <svg id="dashboard-lock-icon" viewBox="0 0 24 24" width="64" height="64" stroke="currentColor" stroke-width="1.5" fill="none" class="lock-svg locked">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" class="lock-body"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" class="lock-shackle"></path>
+              </svg>
+            </div>
+            <h3 id="panel-headline">Dashboard Secured</h3>
+            <p id="panel-instruction">A valid Welcome Key is required to initialize the weather retrieval modules.</p>
+          </div>
+
+          <!-- WEATHER DETAILS VIEW (Initially hidden) -->
+          <div id="weather-details-view" class="weather-details-view hide">
+            <!-- Search bar -->
+            <div class="weather-search-box">
+              <form id="location-form" class="search-form">
+                <input type="text" id="location-input" placeholder="Search location (e.g. London, Paris...)" required autocomplete="off">
+                <button type="submit" class="btn btn-primary btn-search" id="search-submit-btn">
+                  <span class="btn-text">Get Climate</span>
+                  <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.5" fill="none"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <span class="spinner hide"></span>
+                </button>
+              </form>
+            </div>
+
+            <!-- Welcome Message / Dynamic prompt -->
+            <div class="dashboard-prompt">
+              <h2 id="welcome-message-typing" class="welcome-heading"></h2>
+              <p class="welcome-lead">Please specify a location above to obtain real-time meteorological metrics.</p>
+            </div>
+
+            <!-- Temperature & Weather Report (Shown after search) -->
+            <div id="weather-report" class="weather-report hide">
+              <div class="report-header">
+                <div class="location-details">
+                  <h3 id="report-city-name" class="city-name">London</h3>
+                  <span id="report-country" class="country-name">United Kingdom</span>
+                </div>
+                <div class="time-stamp">
+                  <span id="report-local-time">Updated just now</span>
+                </div>
+              </div>
+
+              <div class="report-body">
+                <div class="temp-hero">
+                  <div class="weather-animated-graphic" id="weather-graphic-container">
+                    <!-- Injected animated SVG based on condition -->
+                  </div>
+                  <div class="temp-display">
+                    <span id="report-temp" class="temp-number">12</span>
+                    <span class="temp-unit">°C</span>
+                  </div>
+                </div>
+                <div class="weather-desc-badge">
+                  <span id="report-weather-desc">Light Drizzle</span>
+                </div>
+              </div>
+
+              <!-- Extra climate statistics -->
+              <div class="report-stats">
+                <div class="stat-card">
+                  <div class="stat-icon font-gradient-sky">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-label">Humidity</span>
+                    <span id="report-humidity" class="stat-value">84%</span>
+                  </div>
+                </div>
+
+                <div class="stat-card">
+                  <div class="stat-icon font-gradient-wind">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"></path></svg>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-label">Wind Speed</span>
+                    <span id="report-wind" class="stat-value">12 km/h</span>
+                  </div>
+                </div>
+
+                <div class="stat-card">
+                  <div class="stat-icon font-gradient-temp">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path></svg>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-label">High / Low</span>
+                    <span id="report-hi-lo" class="stat-value">14° / 8°</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ==================== WELCOME KEY OVERLAY ==================== -->
+      <!-- Blurs the dashboard behind and focuses user on entering the key -->
+      <div id="welcome-key-overlay" class="welcome-key-overlay">
+        <div class="key-card">
+          <div class="key-card-badge">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <span>Verification Required</span>
+          </div>
+          
+          <h2 class="key-title">Enter Welcome Key</h2>
+          <p class="key-subtitle">To unlock advanced atmospheric metrics, enter the credentials authorization key.</p>
+          
+          <form id="key-form" class="key-form" novalidate>
+            <div class="key-input-wrapper">
+              <input type="text" id="welcome-key-input" placeholder="••••••••••••" required autocomplete="off" autofocus>
+              <button type="submit" class="btn btn-primary btn-key-submit" title="Unlock Dashboard">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </button>
+            </div>
+          </form>
+
+          <div class="key-hint">
+            <div class="hint-toggle">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              <span>Need help? Hover here or tap to reveal welcome key</span>
+            </div>
+            <div class="hint-text">
+              Use key: <strong class="badge-key">WELCOME2026</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- JavaScript Entry Point -->
+  <script type="module" src="/main.js"></script>
+</body>
+</html>
